@@ -38,14 +38,14 @@ def get_image_model():
     weights = torchvision.models.EfficientNet_B0_Weights.DEFAULT
     model = torchvision.models.efficientnet_b0(weights=weights)
     model.classifier = nn.Linear(in_features=1280, out_features=len(image_class_names))
-    model.load_state_dict(torch.load("nudex.pth", map_location="cpu", weights_only=True))
+    model.load_state_dict(torch.load("nudex.pth", map_location="cpu", weights_only=False))
     model.eval()
     return model, weights.transforms()
 
 @lru_cache()
 def get_text_model():
     model = AutoModelForSequenceClassification.from_pretrained(checkpoint, num_labels=2)
-    model.load_state_dict(torch.load("nude.pth", map_location="cpu", weights_only=True))
+    model.load_state_dict(torch.load("nude.pth", map_location="cpu", weights_only=False))
     model.eval()
     return model
 
